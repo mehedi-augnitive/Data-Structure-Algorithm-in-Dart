@@ -2,6 +2,7 @@ import 'package:stacks_challenges/stack.dart';
 
 void main() {
   challenge1();
+  challenge2();
 }
 
 /// Challenge-1: Reverse a list using Stack
@@ -25,5 +26,31 @@ void printInReverse<T>(List<T> list) {
   while (stack.isNotEmpty) {
     print(stack.pop());
   }
+}
 
+/// Challenge 2: Balance the Parentheses
+void challenge2() {
+  print(isParenthesesBalanced('h((e))llo(world)()'));
+  print(isParenthesesBalanced('(hello world'));
+  print(isParenthesesBalanced('hello)(world'));
+}
+
+bool isParenthesesBalanced(String text) {
+  final stack = Stack<int>();
+
+  final open = '('.codeUnitAt(0);
+  final close = ')'.codeUnitAt(0);
+
+  for (int codeUnit in text.codeUnits) {
+    if (codeUnit == open) {
+      stack.push(codeUnit);
+    } else if (codeUnit == close) {
+      if (stack.isEmpty) {
+        return false;
+      } else {
+        stack.pop();
+      }
+    }
+  }
+  return stack.isEmpty;
 }
