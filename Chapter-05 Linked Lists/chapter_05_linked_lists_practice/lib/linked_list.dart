@@ -1,23 +1,11 @@
-/*
- * A linked list is a collection of values arranged in a linear, unidirectional sequence.
- * Theoretical advantages of linked list over contiguous storage options such as Dart List:
- *      - Constant time insertion and removal from the front of the list
- *      - Reliable performance characteristics
- *
- * A linked list is a chain of NODES.
- * NODES have two responsibilities:
- *      - Hold a value
- *      - Hold a reference to the next node. A null reference indicates the end of the list.
-*/
-
+/// NODE Class
 class Node<T> {
   Node({required this.value, this.next});
 
   final T value;
   Node<T>? next;
 
-  /// This toString method RECURSIVELY returns all of the nodes
-  /// after that node in the linked list.
+  ///RECURSIVELY returns all of the nodes after that node .
   @override
   String toString() {
     if (next == null) return '$value';
@@ -25,34 +13,22 @@ class Node<T> {
   }
 }
 
-/// NODE only knows about a single value, T is the standard letter used to mean that
-/// the node chan hold any type. While creating a linked list of nodes E will be used
-/// to refer to the type since they are elements of the list.
-
-/*
- * A linked list has the concept of a HEAD and TAIL, which refers to the
- * first and last nodes of the list respectively.
-*/
+/// LINKEDLIST class
 class LinkedList<E> {
   Node<E>? head;
   Node<E>? tail;
 
   /// The list is empty if the HEAD is empty
+  /// returns tru or false
   bool get isEmpty => head == null;
-
-/*
- * There are three ways to add values to a linked list, each having its own performance characteristics:
- *      - PUSH: adds value at the front of the ist (HEAD-FIRST-INSERTION)
- *      - APPEND: adds value at the end of the list (TAIL-END-INSERTION)
- *      - INSERTAFTER: adds value after a particular node in the list
-*/
 
   /// PUSH method
   void push(E value) {
-    /// Creates a new NODE assigning it as HEAD pointing the PREVIOUS NODE as its TAIL
+    /// assigns new NODE as HEAD, points the PREVIOUS NODE as TAIL
     head = Node(value: value, next: head);
 
-    /// pushing a new NODE to an EMPTY LIST. Both HEAD and TAIL are same in this case.
+    /// pushes a new NODE to an EMPTY LIST.
+    /// Both HEAD and TAIL are same in this case.
     tail ??= head;
   }
 
@@ -66,12 +42,6 @@ class LinkedList<E> {
     tail = tail!.next;
   }
 
-  /*
-   * INSERTAFTER requires two steps:
-   *    - Finding a particular NODE in the list
-   *    - Inserting new node after it.
-  */
-
   Node<E>? nodeAt(int index) {
     var currentNode = head;
     var currentIndex = 0;
@@ -83,6 +53,7 @@ class LinkedList<E> {
     return currentNode;
   }
 
+  /// INSERTAFTER method
   Node<E> insertAfter(Node<E> node, E value) {
     if (tail == node) {
       append(value);
@@ -97,8 +68,8 @@ class LinkedList<E> {
   String toString() {
     if (isEmpty) return 'List is empty';
 
-    /// Since NODE is designed to RECURSIVELY return all nodes the follow it,
-    /// calling head.toString will return the entire linked list.
+    /// NODE recursively return all nodes the follow it,
+    /// so head.toString returns the entire linked list.
     return head.toString();
   }
 }
