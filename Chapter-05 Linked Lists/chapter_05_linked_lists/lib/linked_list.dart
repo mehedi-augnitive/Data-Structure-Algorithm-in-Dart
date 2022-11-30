@@ -40,6 +40,59 @@ class LinkedList<E> {
   /// The list is empty if the HEAD is empty
   bool get isEmpty => head == null;
 
+/*
+ * There are three ways to add values to a linked list, each having its own performance characteristics:
+ *      - PUSH: adds value at the front of the ist (HEAD-FIRST-INSERTION)
+ *      - APPEND: adds value at the end of the list (TAIL-END-INSERTION)
+ *      - INSERTAFTER: adds value after a particular node in the list
+*/
+
+  /// PUSH method
+  void push(E value) {
+    /// Creates a new NODE assigning it as HEAD pointing the PREVIOUS NODE as its TAIL
+    head = Node(value: value, next: head);
+
+    /// pushing a new NODE to an EMPTY LIST. Both HEAD and TAIL are same in this case.
+    tail ??= head;
+  }
+
+  ///APPEND method
+  void append(E value) {
+    if (isEmpty) {
+      push(value);
+      return;
+    }
+    tail!.next = Node(value: value);
+    tail = tail!.next;
+  }
+
+  /*
+   * INSERTAFTER requires two steps:
+   *    - Finding a particular NODE in the list
+   *    - Inserting new node after it.
+  */
+
+  Node<E>? nodeAt(int index) {
+    var currentNode = head;
+    var currentIndex = 0;
+
+    while (currentNode != null && currentIndex < index) {
+      currentNode = currentNode.next;
+      currentIndex += 1;
+    }
+    return currentNode;
+  }
+
+  Node<E> insertAfter(Node<E> node, E value) {
+    if (tail == node) {
+      append(value);
+      return tail!;
+    }
+
+    node.next = Node(value: value, next: node.next);
+    return node.next!;
+  }
+
   @override
   String toString() {
     if (isEmpty) return 'List is empty';
